@@ -358,24 +358,128 @@ public class StudentGroup implements StudentArrayOperation {
 	@Override
 	public int getCurrentAgeByDate(int indexOfStudent) {
 		// Add your implementation here
-		return 0;
+		if(indexOfStudent<0 || indexOfStudent>=this.students.length)
+		      throw new IllegalArgumentException();
+		else
+		{
+		      Student s=this.students[indexOfStudent];
+		      return getAge(s.getBirthDate());
+		}
+		
 	}
 
 	@Override
 	public Student[] getStudentsByAge(int age) {
 		// Add your implementation here
+		Student l[]=new Student[this.students.length];
+		int j=0;
+		for(int i=0;i<this.students.length;i++)
+		{
+		      if(getCurrentAgeByDate(i)==age)
+		      {
+		             l[j]=students[i];
+		             j=j+1;
+		      }
+		 }
+		 if(j>0)
+		  {
+		            Student m[]=new Student[j];
+		            for(int i=0;i<j;i++)
+		            {
+		                  m[i]=l[i];
+		            }
+		            return m;
+		   }
 		return null;
+		
+		
 	}
 
 	@Override
 	public Student[] getStudentsWithMaxAvgMark() {
 		// Add your implementation here
+		double max=-1;
+		for(int i=0;i<this.students.length;i++)
+		{
+		      double x=this.students[i].getAvgMark();
+		      if(x>max)
+		            max=x;
+		}
+		Student l[]=new Student[this.students.length];
+		int j=0;
+		for(int i=0;i<this.students.length;i++)
+		{
+		      double x=this.students[i].getAvgMark();
+		      if(x==max)
+		      {
+		             l[j]=students[i];
+		             j=j+1;
+		      }
+		}
+		if(j>0)
+		{
+		            Student m[]=new Student[j];
+		            for(int i=0;i<j;i++)
+		            {
+		                  m[i]=l[i];
+		            }
+		            return m;
+		}
 		return null;
+		
 	}
 
 	@Override
 	public Student getNextStudent(Student student) {
 		// Add your implementation here
-		return null;
+		int l=-1;
+		for(int i=0;i<this.students.length;i++)
+		{
+		      if(this.students[i].getId()==student.getId() && this.students[i].getFullName().equals(student.getFullName()) && this.students[i].getBirthDate().compareTo(student.getBirthDate())==0 && this.students[i].getAvgMark()==student.getAvgMark())
+		      {
+		           l=i;
+		           break;
+		      }
+		}
+		if(l==-1||l==(this.students.length-1))
+		      throw new IllegalArgumentException();
+		else{
+		      Student s;
+		      s=this.students[l+1];
+		      return s;
+		}
 	}
+	public static int daysBetween(Date d1, Date d2){
+             return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+     }
+      public int getAge(Date date1) {
+     int age = 0;
+      try {
+      //Date date1 = dateFormat.parse(date);
+      Calendar now = Calendar.getInstance();
+      Calendar dob = Calendar.getInstance();
+      dob.setTime(date1);
+      if (dob.after(now)) {
+              throw new IllegalArgumentException("Can't be born in the future");
+      }
+          int year1 = now.get(Calendar.YEAR);
+          int year2 = dob.get(Calendar.YEAR);
+          age = year1 - year2;
+          int month1 = now.get(Calendar.MONTH);
+          int month2 = dob.get(Calendar.MONTH);
+          if (month2 > month1) {
+              age--;
+          } else if (month1 == month2) {
+              int day1 = now.get(Calendar.DAY_OF_MONTH);
+              int day2 = dob.get(Calendar.DAY_OF_MONTH);
+              if (day2 > day1) {
+                  age--;
+              }
+          }
+      } catch (Exception e) {
+          e.printStackTrace();
+      }
+      return age ;
+    //  return 5;
+      }
 }

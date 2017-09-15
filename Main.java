@@ -70,7 +70,6 @@ public class Main {
 		           System.out.println(h1[i].getId()+"  "+h1[i].getFullName()+"  "+h1[i].getBirthDate()+"  "+h1[i].getAvgMark());
 		      }
 		      
-		      
 		}
 		catch(IllegalArgumentException e)
 		{
