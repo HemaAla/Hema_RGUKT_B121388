@@ -216,6 +216,21 @@ public class StudentGroup implements StudentArrayOperation {
 	@Override
 	public void removeToIndex(int index) {
 		// Add your implementation here
+		if(index<0 || index>=this.students.length)
+		      throw new IllegalArgumentException();
+		else
+		{
+		      int l=this.students.length-index+1;
+		      Student[] s;
+		      s=this.students;
+		      StudentGroup s1=new StudentGroup(index+1);
+		      for(int i=0;i<l;i++)
+		      {
+		            s1.students[i]=s[index+i];
+		      }
+		      this.changeLength(s1.students.length);
+		      this.students=s1.students;
+		}
 	}
 
 	@Override
@@ -256,18 +271,87 @@ public class StudentGroup implements StudentArrayOperation {
 	@Override
 	public Student[] getByBirthDate(Date date) {
 		// Add your implementation here
+		if(date.equals(null))
+		      throw new IllegalArgumentException();
+		else{
+		      Student l[]=new Student[this.students.length];
+		      int j=0;
+		      for(int i=0;i<this.students.length;i++)
+		      {
+		            if(this.students[i].getBirthDate().equals(date))
+		            {
+		                  l[j]=students[i];
+		                  j=j+1;
+		            }
+		      }
+		      if(j>0)
+		      {
+		            Student m[]=new Student[j];
+		            for(int i=0;i<j;i++)
+		            {
+		                  m[i]=l[i];
+		            }
+		            return m;
+		      }
+		 }
 		return null;
 	}
 
 	@Override
 	public Student[] getBetweenBirthDates(Date firstDate, Date lastDate) {
 		// Add your implementation here
+		if(firstDate.equals(null)||lastDate.equals(null))
+		      throw new IllegalArgumentException();
+		else{
+		      Student l[]=new Student[this.students.length];
+		      int j=0;
+		      for(int i=0;i<this.students.length;i++)
+		      {
+		            if(this.students[i].getBirthDate().compareTo(firstDate)>=0 &&this.students[i].getBirthDate().compareTo(lastDate)<=0)
+		            {
+		                  l[j]=students[i];
+		                  j=j+1;
+		            }
+		      }
+		      if(j>0)
+		      {
+		            Student m[]=new Student[j];
+		            for(int i=0;i<j;i++)
+		            {
+		                  m[i]=l[i];
+		            }
+		            return m;
+		      }
+		}
 		return null;
 	}
 
 	@Override
 	public Student[] getNearBirthDate(Date date, int days) {
 		// Add your implementation here
+		if(date.equals(null))
+		      throw new IllegalArgumentException();
+		else{
+		      Student l[]=new Student[this.students.length];
+		      int j=0;
+		      for(int i=0;i<this.students.length;i++)
+		      {
+		            if(daysBetween(date,this.students[i].getBirthDate())<=days)
+		            {
+		                  l[j]=students[i];
+		                  j=j+1;
+		            }
+		      }
+		      if(j>0)
+		      {
+		            Student m[]=new Student[j];
+		            for(int i=0;i<j;i++)
+		            {
+		                  m[i]=l[i];
+		            }
+		            return m;
+		      }
+		}
 		return null;
 	}
 
